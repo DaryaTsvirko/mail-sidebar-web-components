@@ -6,13 +6,71 @@
         <script src = "javascript.js" defer></script>
 </head>
 <body>
+    <div>📬 Mail App</div>
+
+    <div class = "compose">
     <button id="compose">Compose</button>
-    <button id="Inbox">Inbox</button>
-    <button id="Starred">Starred</button>
-    <button id="Snoozed">Snoozed</button>
-    <button id="Sent">Sent</button>
-    <button id="Drafts">Drafts</button>
-    <app-side-button compose="compose"></app-side-button>
+    </div>
+    <style>
+    .compose button{
+        background-color:aqua;
+    }</style>
+    <!-- Our components -->
+    <app-side-button text="Inbox" unreadCount = "1">
+        <slot slot ="icon">📥</slot>
+    </app-side-button>
+
+    <app-side-button text="Starred">
+        <slot slot ="icon">⭐️</slot>
+    </app-side-button>
+
+    <app-side-button text="Snoozed">
+        <slot slot ="icon">⏱</slot>
+    </app-side-button>
+
+    <app-side-button text="Sent">
+        <slot slot ="icon">➡️</slot>
+    </app-side-button>
+
+    <app-side-button text="Drafts">
+        <slot slot ="icon">📄</slot>
+    </app-side-button>
+
+
+    <template id="app-side-button">
+        <style> 
+        .wrapper{
+            display:flex;
+            justify-content: space-between;
+            width: 200px;
+        }
+        .wrapper:hover{
+            background: lightblue;
+        }
+        .text{
+            font-size: 20px;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        </style>
+        <div class = "wrapper">
+            <div>
+                <slot name = "icon"></slot>
+                <span class="text"></span>
+            </div>
+            <span class = "unreadCount"></span>
+        </div>
+        
+    </template>
+
+    <style>
+        /* Tooltip container */
+        .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+    </style>
 </body>
 <footer>
 

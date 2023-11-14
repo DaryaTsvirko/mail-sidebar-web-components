@@ -1,55 +1,28 @@
-class AppSidebar extends HTMLElement{
+class AppSidebarButton extends HTMLElement{
     constructor(){
         super()
+        let template = document.getElementById("app-side-button");//получает шаблон элемента с id
+        let templateContent = template.content;
+        
+        const shadowRoot = this.attachShadow({mode: "open" });//создаем shadow dom и добавляем клон шаблона в shadow dom  
+        shadowRoot.appendChild(templateContent.cloneNode(true));
+    }
+    connectedCallback() { 
+        const textContainer = this.shadowRoot.querySelector('.text');//установка текста
+        textContainer.innerHTML = this.getAttribute('text');
+
+        const unreadCount = this.getAttribute('unreadCount');
+       
+       if(unreadCount > 0){//обраюотка атрибута unreadCount
+       this.shadowRoot.querySelector('.unreadCount').innerHTML = unreadCount ;
+       textContainer.classList.add('bold')
+       }
+    }
+
+    disconnectedCallback(){
         
     }
-    connectedCallback() { 
-        this.innerHTML = "This is a card";
-        console.log('Our element is added from DOM');
-    }
-
-    disconnectedCallback(){
-        console.log('Our element is removed from DOM');
-    }
 
 }
 
-window.customElements.define('app-sidebar', AppCard);
-
-const appCard1 = document.createElement('app-sidebar');
-document.body.append(appCard1);
-
-
-
-
-
-
-
-
-
-
-/*
-    connectedCallback() { 
-        const compose = document.createElement('button');
-        compose.textContent = this.getAttribute('compose');
-        this.appendChild(compose);
-    
-    }
-
-    disconnectedCallback(){
-        console.log('Our elememt removed from DOM')
-    }
-}
-
-
-window.customElements.define('app-side-button', AppSidebar);
-const appSidebar = document.createElement('app-sidebar-button');
-//const compose = document.getElementById('compose');
-
-//compose.replaceWith(document.createElement('app-sidebar-button'));
-//document.querySelector('app-sidebar-button').setAttribute('text', 'Button 1');
-//const appSidebar1 = document.createElement('app-sidebar-button');
-//document.body.append(appSidebar1);
-appSidebar.setAttribute('compose', 'Button 1');
-document.body.appendChild(AppSidebar); 
-*/
+window.customElements.define('app-side-button', AppSidebarButton);
